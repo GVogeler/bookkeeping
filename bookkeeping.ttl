@@ -1,7 +1,8 @@
 /* ToDo: 
 	bk:credit/bk:debit statt bk:to/bk:from ? 
 	Entry, Balance, Total steht wie in Beziehung zu dem ganzen Rest?
-	rdfs:comment zu jedem dazu schreiben	
+	rdfs:comment zu jedem dazu schreiben
+	xbrl:Dimension is richtig verwendet und referenziert?	
 */
 
 @prefix bk:<http://gams.uni-graz.at/rem/bookkeeping/#> .
@@ -9,25 +10,75 @@
 @prefix cidoc-crm:<http://www.cidoc-crm.org/cidoc-crm/> .
 
 bk:Transaction a rdfs:Class .
-bk:Party a rdfs:Class , bk:Between . 
-bk:Account a rdfs:Class , bk:Between .
-bk:Between a rdfs:Class , bk:Between .
-bk:consists-of a rdfs:Property ; rdfs:domain bk:Transaction ; rdfs:range bk:Transfer . 
-bk:Transfer a rdfs:Class ; a cidoc-crm:E5_Event .
-bk:from a rdfs:Property ; rdfs:domain bk:Transfer ; rdfs:range bk:Between . 
-bk:to a rdfs:Property ; rdfs:domain bk:Transfer ; rdfs:range bk:Between . 
-bk:transfers a rdfs:Property ; rdfs:domain bk:Transfer ; rdfs:range bk:Measurable .
+bk:Party a rdfs:Class, bk:Between .
+bk:Account a rdfs:Class, bk:Between .
+bk:Between a rdfs:Class, bk:Between .
+bk:consists-of
+  a rdfs:Property ;
+  rdfs:domain bk:Transaction ;
+  rdfs:range bk:Transfer .
+
+bk:Transfer a rdfs:Class, cidoc-crm:E5_Event .
+bk:from
+  a rdfs:Property ;
+  rdfs:domain bk:Transfer ;
+  rdfs:range bk:Between .
+
+bk:to
+  a rdfs:Property ;
+  rdfs:domain bk:Transfer ;
+  rdfs:range bk:Between .
+
+bk:transfers
+  a rdfs:Property ;
+  rdfs:domain bk:Transfer ;
+  rdfs:range bk:Measurable .
+
 bk:Measurable a rdfs:Class .
-bk:attested a rdfs:Property ; a cidoc-crm:P67i_is_referred_to_by ; rdfs:domain bk:Transfer .
-bk:occurs-at a rdfs:Property ; rdfs:domain bk:Transfer ; rdfs:range bk:Place .
+bk:attested
+  a rdfs:Property, cidoc-crm:P67i_is_referred_to_by ;
+  rdfs:domain bk:Transfer .
 
-bk:Liability a rdfs:Class ; a bk:Transfer. 
-bk:held a rdfs:Property ; a bk:from ; rdfs:domain bk:Liability; rdfs:range bk:Party .
-bk:owedto a rdfs:Property ; a bk:to ; rdfs:domain bk:Liability; rdfs:range bk:Party .
+bk:occurs-at
+  a rdfs:Property ;
+  rdfs:domain bk:Transfer ;
+  rdfs:range bk:Place .
 
-bk:MonetaryValue a rdfs:Class ; a bk:Measurable .
+bk:Liability a rdfs:Class, bk:Transfer .
+bk:held
+  a rdfs:Property, bk:from ;
+  rdfs:domain bk:Liability ;
+  rdfs:range bk:Party .
 
+bk:owedto
+  a rdfs:Property, bk:to ;
+  rdfs:domain bk:Liability ;
+  rdfs:range bk:Party .
+
+bk:MonetaryValue a rdfs:Class, bk:Measurable .
 bk:Balance a rdfs:Class .
-bk:Entry a rdfs:Class .
+bk:Entry
+  a rdfs:Class ;
+  rdfs:label "Bookkeeping entry" ;
+  rdfs:comment "An 'Entry' is an information fragment of a transfer often only naming one party as the other can be deduced from the textual context of the entry." .
+
 bk:Total a rdfs:Class .
-bk:on a rdfs:Property; rdfs:domain bk:Total .
+bk:on
+  a rdfs:Property ;
+  rdfs:domain bk:Total .
+
+<http://gams.uni-graz.at/rem/bookkeeping#Dimension>
+  a rdfs:Class ;
+  rdfs:isDefinedBy <http://www.xbrl.org/specification/dimensions/rec-2012-01-25/dimensions-rec-2006-09-18+corrected-errata-2012-01-25-clean.html> .
+
+<http://gams.uni-graz.at/rem/bookkeeping#Rubric>
+  a rdfs:Class ;
+  rdfs:subPropertyOf <http://gams.uni-graz.at/rem/bookkeeping#Dimension> .
+
+<http://gams.uni-graz.at/rem/bookkeeping#Account>
+  a rdfs:Class ;
+  rdfs:subPropertyOf <http://gams.uni-graz.at/rem/bookkeeping#Dimension> .
+
+<http://gams.uni-graz.at/rem/bookkeeping#PersonalAccount>
+  a rdfs:Class ;
+  rdfs:subPropertyOf <http://gams.uni-graz.at/rem/bookkeeping#Account> .
