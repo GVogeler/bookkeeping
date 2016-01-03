@@ -99,19 +99,30 @@
             <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Total"/>
         </rdfs:Property>
         
-    <rdfs:Class rdf:ID="Dimension">
+    <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#credit">
+        <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Entry"/>
+    </rdfs:Property>
+    
+    <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#debit">
+        <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Entry"/>
+    </rdfs:Property>
+    
+    <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Dimension">
         <rdfs:isDefinedBy rdf:resource="http://www.xbrl.org/specification/dimensions/rec-2012-01-25/dimensions-rec-2006-09-18+corrected-errata-2012-01-25-clean.html"/>
     </rdfs:Class>
-    <rdfs:Class rdf:ID="Rubric">
-        <rdfs:subPropertyOf rdf:resource="http://gams.uni-graz.at/rem/bookkeeping#Dimension"/>
+    
+    <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Rubric">
+        <rdf:type rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Dimension"/>
     </rdfs:Class>
-    <rdfs:Class rdf:ID="Account">
-        <rdfs:subPropertyOf rdf:resource="http://gams.uni-graz.at/rem/bookkeeping#Dimension"/>
+    
+    <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Account">
+        <rdf:type rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Dimension"/>
     </rdfs:Class>
-    <rdfs:Class rdf:ID="PersonalAccount">
-        <rdfs:subPropertyOf rdf:resource="http://gams.uni-graz.at/rem/bookkeeping#Account"/>
+    
+    <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#PersonalAccount">
+        <rdf:type rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Account"/>
     </rdfs:Class>
-
+    
 <!--#bk:entry a rdfs:Class . 
 #bk:transaction a rdfs:Class .
 #bk:monetaryAmount a rdfs:Class .

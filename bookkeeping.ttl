@@ -62,23 +62,31 @@ bk:Entry
   rdfs:label "Bookkeeping entry" ;
   rdfs:comment "An 'Entry' is an information fragment of a transfer often only naming one party as the other can be deduced from the textual context of the entry." .
 
+bk:credit
+  a rdfs:Property ;
+  rdfs:domain bk:Entry .
+
+bk:debit
+  a rdfs:Property ;
+  rdfs:domain bk:Entry .
+  
 bk:Total a rdfs:Class .
 bk:on
   a rdfs:Property ;
   rdfs:domain bk:Total .
 
-<http://gams.uni-graz.at/rem/bookkeeping#Dimension>
+bk:Dimension
   a rdfs:Class ;
   rdfs:isDefinedBy <http://www.xbrl.org/specification/dimensions/rec-2012-01-25/dimensions-rec-2006-09-18+corrected-errata-2012-01-25-clean.html> .
 
-<http://gams.uni-graz.at/rem/bookkeeping#Rubric>
+bk:Rubric
   a rdfs:Class ;
-  rdfs:subPropertyOf <http://gams.uni-graz.at/rem/bookkeeping#Dimension> .
+  a bk:Dimension .
 
-<http://gams.uni-graz.at/rem/bookkeeping#Account>
+bk:Account
   a rdfs:Class ;
-  rdfs:subPropertyOf <http://gams.uni-graz.at/rem/bookkeeping#Dimension> .
+  bk:Dimension .
 
-<http://gams.uni-graz.at/rem/bookkeeping#PersonalAccount>
+bk:PersonalAccount
   a rdfs:Class ;
-  rdfs:subPropertyOf <http://gams.uni-graz.at/rem/bookkeeping#Account> .
+  a bk:Account .
