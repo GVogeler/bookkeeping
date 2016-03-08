@@ -1,129 +1,200 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-    xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:g2o="http://gams.uni-graz.at/ontology/#"
-    xmlns:gl="http://www.xbrl.org/GLTaxonomy/" xmlns:owl="http://www.w3.org/2002/07/owl#"
-    xmlns:skos="http://www.w3.org/2004/02/skos/core#"
-    xmlns:tei="http://www.tei-c.org/ns/1.0"
-    xmlns:oa="http://www.w3.org/ns/oa#" xmlns:crm="http://www.cidoc-crm.org/cidoc-crm"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xml:base="http://gams.uni-graz.at/rem/bookkeeping#"
->
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:g2o="http://gams.uni-graz.at/ontology/#" xmlns:gl="http://www.xbrl.org/GLTaxonomy/"
+    xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+    xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:oa="http://www.w3.org/ns/oa#"
+    xmlns:crm="http://www.cidoc-crm.org/cidoc-crm" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xml:base="http://gams.uni-graz.at/rem/bookkeeping#">
+    <!--
+        Ontology of economic facts and human actions recorded in historical accounting documents.
+        
+        First Draft 2016-01-06
+        Rev. 2016-03-08
+        
+        Georg Vogeler <georg.vogeler@uni-graz.at>
+        
+    -->
 
-        <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Transaction">
-        </rdfs:Class>
-        
-        <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Party">
-            <rdf:type rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Between"/>
-        </rdfs:Class>
-        
-        <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Account">
-            <rdf:type rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Between"/>
-        </rdfs:Class>
-        
-        <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Between">
-            <rdf:type rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Between"/>
-        </rdfs:Class>
-        
-        <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#consists-of">
-            <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Transaction"/>
-            <rdfs:range rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Transfer"/>
-        </rdfs:Property>
-        
-        <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Transfer">
-            <rdf:type rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E5_Event"/>
-        </rdfs:Class>
-        
-        <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#from">
-            <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Transfer"/>
-            <rdfs:range rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Between"/>
-        </rdfs:Property>
-        
-        <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#to">
-            <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Transfer"/>
-            <rdfs:range rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Between"/>
-        </rdfs:Property>
-        
-        <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#transfers">
-            <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Transfer"/>
-            <rdfs:range rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Measurable"/>
-        </rdfs:Property>
-        
-        <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Measurable">
-        </rdfs:Class>
-        
-        <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#attested">
-            <rdf:type rdf:resource="http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by"/>
-            <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Transfer"/>
-        </rdfs:Property>
-        
-        <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#occurs-at">
-            <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Transfer"/>
-            <rdfs:range rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Place"/>
-        </rdfs:Property>
-        
-        <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Liability">
-            <rdf:type rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Transfer"/>
-        </rdfs:Class>
-        
-        <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#held">
-            <rdf:type rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#from"/>
-            <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Liability"/>
-            <rdfs:range rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Party"/>
-        </rdfs:Property>
-        
-        <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#owedto">
-            <rdf:type rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#to"/>
-            <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Liability"/>
-            <rdfs:range rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Party"/>
-        </rdfs:Property>
-        
-        <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#MonetaryValue">
-            <rdf:type rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Measurable"/>
-        </rdfs:Class>
-        
-        <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Balance">
-        </rdfs:Class>
-        
-        <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Entry">
-            <rdfs:label>Bookkeeping entry</rdfs:label>
-            <rdfs:comment>An "Entry" is an information fragment of a transfer often only naming one party as the other can be deduced from the textual context of the entry.</rdfs:comment>
-            <!-- ist ein Literal? -->
-            <!-- Entry als Spezialfall von XBRL-Fact ?  -->
-        </rdfs:Class>
-        
-        <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Total">
-        </rdfs:Class>
-        
-        <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#on">
-            <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Total"/>
-        </rdfs:Property>
-        
+    <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Transaction">
+        <rdfs:comment>A transaction is the combination of transfers of goods or money which
+        </rdfs:comment>
+    </rdfs:Class>
+
+    <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Party">
+        <rdfs:subClassOf rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Between"/>
+        <rdfs:comment>Each transaction and/or transfer is executed between two entities. One of them
+            can be a person or a legal entity.</rdfs:comment>
+    </rdfs:Class>
+
+    <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Account">
+        <rdfs:subClassOf rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Between"/>
+        <rdfs:comment>Each transaction and/or transfer is executed between two entities. One of them
+            can be an abstract concept in the accounting system.</rdfs:comment>        
+    </rdfs:Class>
+
+    <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Between">
+        <rdfs:subClassOf rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Between"/>
+        <rdfs:comment>Each transaction and/or transfer is executed between two entities which can have very different nature. This class describes that the entity is part of the transaction/transfer and leaves other roles and properties to further classification.</rdfs:comment> 
+    </rdfs:Class>
+
+    <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#consists-of">
+        <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Transaction"/>
+        <rdfs:range rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Transfer"/>
+        <rdfs:comment>Transactions can consist of several transfers.</rdfs:comment>
+    </rdfs:Property>
+
+    <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Transfer">
+        <rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E5_Event"/>
+    </rdfs:Class>
+
+    <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#from">
+        <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Transfer"/>
+        <rdfs:range rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Between"/>
+    </rdfs:Property>
+
+    <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#to">
+        <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Transfer"/>
+        <rdfs:range rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Between"/>
+    </rdfs:Property>
+
+    <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#transfers">
+        <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Transfer"/>
+        <rdfs:range rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Measurable"/>
+    </rdfs:Property>
+
+    <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Measurable"/>
+
+    <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#attested">
+        <rdfs:subPropertyOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by"/>
+        <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Transfer"/>
+    </rdfs:Property>
+
+    <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#occurs-at">
+        <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Transfer"/>
+        <rdfs:range rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Place"/>
+    </rdfs:Property>
+
+    <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Liability">
+        <rdfs:subClassOf rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Transfer"/>
+    </rdfs:Class>
+
+    <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#held">
+        <rdfs:subPropertyOf rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#from"/>
+        <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Liability"/>
+        <rdfs:range rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Party"/>
+    </rdfs:Property>
+
+    <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#owedto">
+        <rdfs:subPropertyOf rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#to"/>
+        <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Liability"/>
+        <rdfs:range rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Party"/>
+    </rdfs:Property>
+
+    <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#MonetaryValue">
+        <rdfs:subClassOf rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Measurable"/>
+    </rdfs:Class>
+
+    <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Balance"> </rdfs:Class>
+
+    <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Entry">
+        <rdfs:label>entry in a ledger</rdfs:label>
+        <rdfs:comment>An "entry" is an information fragment of a transfer often only naming one
+            party as the other can be deduced from the textual context of the entry.</rdfs:comment>
+        <!-- ist ein Literal? -->
+        <!-- Entry als Spezialfall von XBRL-Fact ?  -->
+    </rdfs:Class>
+
+    <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#entryDetail">
+        <rdfs:comment>The Entries are part of a transaction, a transfer or a complex entry in the
+            ledger.</rdfs:comment>
+        <rdfs:range rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Entry"/>
+    </rdfs:Property>
+
+    <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Total"> </rdfs:Class>
+
+    <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#on">
+        <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Total"/>
+        <rdfs:comment>The totals are drawn on a group of economic facts like all transfers booked on
+            a specific account, transactions with a person, entries grouped in a rubric, but even
+            all entries entered on one page in a ledger</rdfs:comment>
+    </rdfs:Property>
+
     <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#credit">
         <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Entry"/>
+        <rdfs:comment/>
     </rdfs:Property>
-    
+
     <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#debit">
         <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Entry"/>
     </rdfs:Property>
-    
+
     <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Dimension">
-        <rdfs:isDefinedBy rdf:resource="http://www.xbrl.org/specification/dimensions/rec-2012-01-25/dimensions-rec-2006-09-18+corrected-errata-2012-01-25-clean.html"/>
+        <rdfs:isDefinedBy
+            rdf:resource="http://www.xbrl.org/specification/dimensions/rec-2012-01-25/dimensions-rec-2006-09-18+corrected-errata-2012-01-25-clean.html"
+        />
     </rdfs:Class>
-    
+
     <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Rubric">
-        <rdf:type rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Dimension"/>
+        <rdfs:subClassOf rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Dimension"/>
     </rdfs:Class>
-    
+
     <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Account">
-        <rdf:type rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Dimension"/>
+        <rdfs:subClassOf rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Dimension"/>
     </rdfs:Class>
-    
+
     <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#PersonalAccount">
-        <rdf:type rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Account"/>
+        <rdfs:subClassOf rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Account"/>
     </rdfs:Class>
+
+    <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Unit"> </rdfs:Class>
+
+    <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#what">
+        <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Measurable"/>
+    </rdfs:Property>
+    <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#unit">
+        <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Measurable"/>
+        <rdfs:range rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Unit"/>
+    </rdfs:Property>
+    <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#quantity">
+        <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Measurable"/>
+    </rdfs:Property>
+
+    <!-- Do we need the indirect properties priceOf/priceFor? why not just model it as a subClass to isEquivalentTo?
+    The current solution makes it easier to add the context
+    -->
+    <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Price">
+        <rdfs:comment>Describes the relationship between a measurable is the monetary value of a measurable realised in a transcation (or at least in an offer to a transcation)</rdfs:comment>
+    </rdfs:Class>
+    <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#priceOf">
+<!--        <rdfs:subPropertyOf rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#equivalenceOf"/>
+        Macht das Sinn, das als Subproperty zu definieren?
+        Wikipedia: Preis ist der realisierte Wert; Schätzung ein nicht realisierter. Meist ausgedrückt in Geldwert.
+        -->
+        <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Price"/>
+        <rdfs:range rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Measurable"/>
+    </rdfs:Property>
+    <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#priceFor">
+        <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Price"/>
+        <rdfs:range rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#MonetaryValue"/>
+    </rdfs:Property>
     
-<!--#bk:entry a rdfs:Class . 
+    <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Equivalence">
+        <rdfs:subPropertyOf rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#equivalenceTo"/>
+        <rdfs:comment>Values in different unit systems can be equivalent. Usually this statement has a temporal and spatial context. In historical data it can additionally be attested.</rdfs:comment>
+    </rdfs:Class>
+    <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#equivalenceOf">
+        <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Equivalence"/>
+        <rdfs:range rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Measurable"/>
+        <owl:inverseOf rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#equivalenceTo"/>
+    </rdfs:Property>
+    <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#equivalenceTo">
+        <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Equivalence"/>
+        <rdfs:range rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Measurable"/>
+        <owl:inverseOf rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#equivalenceOf"/>
+    </rdfs:Property>
+
+    <!--#bk:entry a rdfs:Class . 
 #bk:transaction a rdfs:Class .
 #bk:monetaryAmount a rdfs:Class .
 #bk:description a rdfs:Class .
@@ -134,5 +205,5 @@
 #bk:price(bk:amount equals bk:amount, bk:date)
 #bk:account (=classification), bk:total
 #bk:transaction => bk:transfer(bk:from, bk:to, bk:what (a bk:amount)) and related transfers-->
-  
+
 </rdf:RDF>
