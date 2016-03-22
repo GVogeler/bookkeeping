@@ -147,8 +147,13 @@
         <rdfs:subClassOf rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Account"/>
     </rdfs:Class>
 
-    <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Unit"> </rdfs:Class>
-
+    <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Unit"></rdfs:Class>
+    <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Currency">
+        <rdfs:subClassOf rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Unit"/>
+        <rdfs:comment>Units that are used to identify money which under the control of a specific regime in a way that core characteristics (e.g. area of acceptance, ##Edelmetallgehalt## can be infered by the name of the currency.</rdfs:comment>
+        <!-- ToDo: check with nomisma.org if there is already a concept for this -->
+    </rdfs:Class>
+    
     <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#what">
         <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Measurable"/>
     </rdfs:Property>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:g2o="http://gams.uni-graz.at/ontology/#" xmlns:gl="http://www.xbrl.org/GLTaxonomy/"
+    xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+    xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:oa="http://www.w3.org/ns/oa#"
+    xmlns:crm="http://www.cidoc-crm.org/cidoc-crm" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:rem="http://gams.uni-graz.at/rem/bookkeeping/#"
+    xml:base="http://gams.uni-graz.at/rem/currencies/#">
+    <rem:Currency rdf:ID="tlr">
+        <skos:prefLabel>Taler</skos:prefLabel>
+        <skos:altLabel>Thaler</skos:altLabel>
+    </rem:Currency>
+</rdf:RDF>
