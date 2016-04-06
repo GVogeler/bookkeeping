@@ -1,28 +1,49 @@
-/* ToDo: 
-	bk:credit/bk:debit statt bk:to/bk:from ? 
-	Entry, Balance, Total steht wie in Beziehung zu dem ganzen Rest?
-	rdfs:comment zu jedem dazu schreiben
-	xbrl:Dimension is richtig verwendet und referenziert?	
-*/
-
 @prefix bk:<http://gams.uni-graz.at/rem/bookkeeping/#> .
 @prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> .
 @prefix cidoc-crm:<http://www.cidoc-crm.org/cidoc-crm/> .
+@prefix rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+# ToDo: 
+#	bk:credit/bk:debit instead of bk:to/bk:from ? 
+#	Entry, Balance, Total steht wie in Beziehung zu dem ganzen Rest?
+#	Add documentation with rdfs:comment to every class/property defined#
+#	xbrl:Dimension is used correctly?
+#
+#	check every class/property if it can be replaced by CIDOC-CRM class
+#	reference appropriate CIDOC-CRM superclasses/superProperties?	
+#
+
 
 bk:Transaction a rdfs:Class .
-bk:Party a rdfs:Class, bk:Between .
-bk:Account a rdfs:Class, bk:Between .
-bk:Between a rdfs:Class, bk:Between .
+# CIDOC-CRM: Event? Built from more than one bk:Transfer
+
+bk:Party a rdfs:Class;
+	rdfs:subClassOf bk:Between, cidoc-crm:E39_Actor ;
+	rdfs:comment "is an actor in a transaction." .
+bk:Account a rdfs:Class ;
+	rdfs:subClassOf bk:Between, cidoc-crm:E28_Conceptual_Object .
+# CIDOC-CRM: can the abstract concept of an account be defined more specifically (E89_propositional object or E55_type ? 
+bk:Between a rdfs:Class ;
+	rdfs:subClassOf cidoc-crm:E71_Man-Made_Thing ;
+	rdfs:comment "is a generic class for any concept which can be part of transaction in abstract bookkeeping." .
+	
 bk:consists-of
   a rdfs:Property ;
   rdfs:domain bk:Transaction ;
   rdfs:range bk:Transfer .
+# cidoc-crm:P9_consist_of seems to be good candidate, but it is only defined by the temporal entailment while the bk:Transfer-bk:Transaction relationship creates a propositional relationship as well.
 
-bk:Transfer a rdfs:Class, cidoc-crm:E5_Event .
+bk:Transfer a rdfs:Class ;
+	rdfs:subClassOf cidoc-crm:E5_Event ;
+	rdfs:comment "is the action in which one party cedes property rights to another parties or economic facts of an actor are assigned to an account. " .
+
 bk:from
   a rdfs:Property ;
   rdfs:domain bk:Transfer ;
   rdfs:range bk:Between .
+#
+#CIDOC-CRM:
+#	rdfs:subPropertyOf cidoc-crm:P11_had_participant seems to be good candidate, but it does not cover transfers involving accounts.
+#
 
 bk:to
   a rdfs:Property ;
@@ -33,25 +54,33 @@ bk:transfers
   a rdfs:Property ;
   rdfs:domain bk:Transfer ;
   rdfs:range bk:Measurable .
+# 
+#	cidoc-crm:P12_occured_in_the_presence_of does make sense? A transcation could be executed far away of the objects transfered (e.g. by contract).
 
-bk:Measurable a rdfs:Class .
+bk:Measurable a rdfs:Class ;
+	a cidoc-crm:E77_Persistent_item .
+
 bk:attested
-  a rdfs:Property, cidoc-crm:P67i_is_referred_to_by ;
+  a rdfs:Property ;
+  rdfs:subPropertyOf cidoc-crm:P67i_is_referred_to_by ;
   rdfs:domain bk:Transfer .
+#	is P70i (is documented in) the better CIDOC equivalent?
 
 bk:occurs-at
-  a rdfs:Property ;
+  a rdfs:Property, cidoc-crm:P7_took_place_at ;
   rdfs:domain bk:Transfer ;
   rdfs:range bk:Place .
 
 bk:Liability a rdfs:Class, bk:Transfer .
 bk:held
-  a rdfs:Property, bk:from ;
+  a rdfs:Property ;
+  rdfs:subPropertyOf bk:from ;
   rdfs:domain bk:Liability ;
   rdfs:range bk:Party .
 
 bk:owedto
-  a rdfs:Property, bk:to ;
+  a rdfs:Property ;
+  rdfs:subPropertyOf bk:to ;
   rdfs:domain bk:Liability ;
   rdfs:range bk:Party .
 
@@ -60,7 +89,7 @@ bk:Balance a rdfs:Class .
 bk:Entry
   a rdfs:Class ;
   rdfs:label "Bookkeeping entry" ;
-  rdfs:comment "An 'Entry' is an information fragment of a transfer often only naming one party as the other can be deduced from the textual context of the entry." .
+  rdfs:comment "is an information fragment of a transfer often only naming one party as the other can be deduced from the textual context of the entry." .
 
 bk:credit
   a rdfs:Property ;
@@ -85,8 +114,8 @@ bk:Rubric
 
 bk:Account
   a rdfs:Class ;
-  bk:Dimension .
+  rdfs:subClassOf bk:Dimension .
 
 bk:PersonalAccount
   a rdfs:Class ;
-  a bk:Account .
+  rdfs:subClassOf bk:Account .
