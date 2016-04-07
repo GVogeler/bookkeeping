@@ -2,10 +2,10 @@
 @prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> .
 @prefix cidoc-crm:<http://www.cidoc-crm.org/cidoc-crm/> .
 @prefix rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl:<http://www.w3.org/2002/07/owl#> .
 # ToDo: 
-#	bk:credit/bk:debit instead of bk:to/bk:from ? 
-#	Entry, Balance, Total steht wie in Beziehung zu dem ganzen Rest?
-#	Add documentation with rdfs:comment to every class/property defined#
+#	bk:credit/bk:debit instead of bk:to/bk:from ? Or subClassOf
+#	Add documentation with rdfs:comment to every class/property defined
 #	xbrl:Dimension is used correctly?
 #
 #	check every class/property if it can be replaced by CIDOC-CRM class
@@ -19,8 +19,11 @@ bk:Transaction a rdfs:Class .
 bk:Party a rdfs:Class;
 	rdfs:subClassOf bk:Between, cidoc-crm:E39_Actor ;
 	rdfs:comment "is an actor in a transaction." .
-bk:Account a rdfs:Class ;
-	rdfs:subClassOf bk:Between, cidoc-crm:E28_Conceptual_Object .
+bk:Account
+  	a rdfs:Class ;
+  	rdfs:subClassOf bk:Dimension ;
+	rdfs:subClassOf bk:Between, cidoc-crm:E28_Conceptual_Object ;
+	rdfs:comment "is an abstract concept of organisation of economic activities being part of a system of evaluation of these economic activities." .
 # CIDOC-CRM: can the abstract concept of an account be defined more specifically (E89_propositional object or E55_type ? 
 bk:Between a rdfs:Class ;
 	rdfs:subClassOf cidoc-crm:E71_Man-Made_Thing ;
@@ -29,17 +32,19 @@ bk:Between a rdfs:Class ;
 bk:consists-of
   a rdfs:Property ;
   rdfs:domain bk:Transaction ;
-  rdfs:range bk:Transfer .
+  rdfs:range bk:Transfer ;
+  rdfs:comment "A transcation consists of a group of transfers. " .
 # cidoc-crm:P9_consist_of seems to be good candidate, but it is only defined by the temporal entailment while the bk:Transfer-bk:Transaction relationship creates a propositional relationship as well.
 
 bk:Transfer a rdfs:Class ;
 	rdfs:subClassOf cidoc-crm:E5_Event ;
-	rdfs:comment "is the action in which one party cedes property rights to another parties or economic facts of an actor are assigned to an account. " .
+	rdfs:comment "is the action in which one party cedes property rights to another parties or economic facts of an actor are assigned to an account." .
 
 bk:from
   a rdfs:Property ;
   rdfs:domain bk:Transfer ;
-  rdfs:range bk:Between .
+  rdfs:range bk:Between ;
+  rdfs:comment "" .
 #
 #CIDOC-CRM:
 #	rdfs:subPropertyOf cidoc-crm:P11_had_participant seems to be good candidate, but it does not cover transfers involving accounts.
@@ -57,21 +62,37 @@ bk:transfers
 # 
 #	cidoc-crm:P12_occured_in_the_presence_of does make sense? A transcation could be executed far away of the objects transfered (e.g. by contract).
 
-bk:Measurable a rdfs:Class ;
-	a cidoc-crm:E77_Persistent_item .
+bk:Measurable
+	a rdfs:Class ;
+	rdfs:subClassOf cidoc-crm:E77_Persistent_item .
 
+bk:setsPrice
+	a rdfs:Property ;
+	rdfs:domain bk:Transfer ;
+	rdfs:range bk:Price .
+
+bk:Price
+	a rdfs:Class ;
+	rdfs:subClassOf cidoc-crm:E3_Condition_State .
+
+bk:priceOf
+	a rdfs:Property ;
+	rdfs:domain bk:Measurable ;
+	rdfs:range bk:Measurable .
+	
 bk:attested
   a rdfs:Property ;
   rdfs:subPropertyOf cidoc-crm:P67i_is_referred_to_by ;
-  rdfs:domain bk:Transfer .
+  rdfs:domain bk:Transfer ;
+  rdfs:range cidoc-crm:E13_Document .
 #	is P70i (is documented in) the better CIDOC equivalent?
 
-bk:occurs-at
-  a rdfs:Property, cidoc-crm:P7_took_place_at ;
-  rdfs:domain bk:Transfer ;
-  rdfs:range bk:Place .
-
-bk:Liability a rdfs:Class, bk:Transfer .
+# bk:occurs-at owl:sameAs cidoc-crm:P7_took_place_at .
+# bk:occurs-when
+  
+bk:Liability 
+  a rdfs:Class ;
+  rdfs:subClassOf bk:Transfer .
 bk:held
   a rdfs:Property ;
   rdfs:subPropertyOf bk:from ;
@@ -84,10 +105,29 @@ bk:owedto
   rdfs:domain bk:Liability ;
   rdfs:range bk:Party .
 
-bk:MonetaryValue a rdfs:Class, bk:Measurable .
-bk:Balance a rdfs:Class .
+bk:MonetaryValue a rdfs:Class ;
+	rdfs:subClassOf bk:Measurable .
+
+bk:Total a rdfs:Class .
+bk:on
+  a rdfs:Property ;
+  rdfs:domain bk:Total ;
+  rdfs:range bk:GroupOfEconomicFacts ;
+  rdfs:comment "a total is calculated on a group of economic facts, e.g. an account.".
+
+bk:Balance 
+	a rdfs:Class ; 
+	rdfs:subClassOf bk:Total .
+bk:compares a rdfs:Property ;
+	rdfs:domain bk:Balance ;
+	rdfs:range bk:GroupOfEconomicFacts .
+	
+bk:GroupOfEconomicFacts a rdfs:Class ;
+	rdfs:comment "is any kind of economic facts which can be totaled" .
+	
 bk:Entry
   a rdfs:Class ;
+  rdfs:subClassOf bk:Transfer ;
   rdfs:label "Bookkeeping entry" ;
   rdfs:comment "is an information fragment of a transfer often only naming one party as the other can be deduced from the textual context of the entry." .
 
@@ -99,23 +139,16 @@ bk:debit
   a rdfs:Property ;
   rdfs:domain bk:Entry .
   
-bk:Total a rdfs:Class .
-bk:on
-  a rdfs:Property ;
-  rdfs:domain bk:Total .
-
 bk:Dimension
   a rdfs:Class ;
   rdfs:isDefinedBy <http://www.xbrl.org/specification/dimensions/rec-2012-01-25/dimensions-rec-2006-09-18+corrected-errata-2012-01-25-clean.html> .
 
 bk:Rubric
   a rdfs:Class ;
-  a bk:Dimension .
+  rdfs:subClassOf bk:Dimension ;
+  rdfs:comment "is a intellectual dimenson of the data expressed with the help of a heading to a list, to a table or to similar methods to group entries." .
 
-bk:Account
-  a rdfs:Class ;
-  rdfs:subClassOf bk:Dimension .
-
-bk:PersonalAccount
-  a rdfs:Class ;
-  rdfs:subClassOf bk:Account .
+#Is this covered by a transfer to a rdf:Party?
+#bk:PersonalAccount
+#  a rdfs:Class ;
+#  rdfs:subClassOf bk:Account .
