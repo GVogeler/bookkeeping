@@ -3,24 +3,15 @@
 @prefix cidoc-crm:<http://www.cidoc-crm.org/cidoc-crm/> .
 @prefix rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix owl:<http://www.w3.org/2002/07/owl#> .
-# ToDo: 
-#	bk:credit/bk:debit instead of bk:to/bk:from ? Or subClassOf?
-#	Add documentation with rdfs:comment to every class/property defined
-#	xbrl:Dimension is used correctly?
-#
-#	check every class/property if it can be replaced by CIDOC-CRM class
-#	reference appropriate CIDOC-CRM superclasses/superProperties?	
-#
 
 bk:Transaction a rdfs:Class .
-# CIDOC-CRM: Event? Built from more than one bk:Transfer
 
 bk:Party a rdfs:Class;
 	rdfs:subClassOf bk:Between, cidoc-crm:E39_Actor ;
 	rdfs:comment "is an actor in a transaction." .
 bk:Account
   	a rdfs:Class ;
-  	rdfs:subClassOf bk:Dimension ;
+  	rdfs:subClassOf bk:GroupOfEconomicFacts ;
 	rdfs:subClassOf bk:Between, cidoc-crm:E28_Conceptual_Object ;
 	rdfs:comment "is an abstract concept of organisation of economic activities being part of a system of evaluation of these economic activities." .
 # CIDOC-CRM: can the abstract concept of an account be defined more specifically (E89_propositional object or E55_type ? 
@@ -37,13 +28,13 @@ bk:consists-of
 
 bk:Transfer a rdfs:Class ;
 	rdfs:subClassOf cidoc-crm:E5_Event ;
-	rdfs:comment "is the action in which one party cedes property rights to another parties or economic facts of an actor are assigned to an account." .
+	rdfs:comment "is the action in which one party conveys property rights to another party or in which economic facts of an actor are assigned to an account." .
 
 bk:from
-  a rdfs:Property ;
-  rdfs:domain bk:Transfer ;
-  rdfs:range bk:Between ;
-  rdfs:comment "A measurable is transfered from one party or account " .
+  	a rdfs:Property ;
+  	rdfs:domain bk:Transfer ;
+  	rdfs:range bk:Between ;
+  	rdfs:comment "A measurable is transfered from one party or account " .
 #
 #CIDOC-CRM:
 #	rdfs:subPropertyOf cidoc-crm:P11_had_participant seems to be good candidate, but it does not cover transfers involving accounts.
@@ -87,13 +78,17 @@ bk:setsPrice
 
 bk:Price
 	a rdfs:Class ;
+	rdfs:subClassOf bk:Conversion ;
+	rdfs:comment "is the relationship of the quantity of a measruable to another when it is exchanged or demanded in barter or sale." .
+bk:Conversion
+	a rdfs:Class ;
 	rdfs:subClassOf cidoc-crm:E3_Condition_State ;
-	rdfs:comment "is the relationship of the quantity of measruable to another when it is exchanged or demanded in barter or sale." .
+	rdfs:comment "is the relationship of the quantity of a measruable to another." .
 	
 bk:Tax
 	a rdfs:Class ;
 	rdfs:subClassOf bk:Price ;
-	rdfs:comment "sets a relationship of the quantity of measurable to another by legal or other force and is usually only fragmentary to the quantity of the thing taxed." .
+	rdfs:comment "sets a proportion of the quantity of a measurable to another by legal or other force." .
 
 bk:priceOf
 	a rdfs:Property ;
@@ -135,16 +130,24 @@ bk:on
   rdfs:range bk:GroupOfEconomicFacts ;
   rdfs:comment "a total is calculated on a group of economic facts, e.g. an account.".
 
+bk:Balancing
+	a rdfs:Class ;
+	rdfs:subClassOf cidoc-crm:E5_Event ;
+	rdfs:comment "is the activity in which a state of economic affairs is fixed for further use.".
+  
 bk:Balance 
 	a rdfs:Class ; 
 	rdfs:subClassOf bk:Total .
 bk:compares a rdfs:Property ;
 	rdfs:domain bk:Balance ;
 	rdfs:range bk:GroupOfEconomicFacts .
+# Do we have to be this generic or can we reduce that to accounts?
 	
 bk:GroupOfEconomicFacts a rdfs:Class ;
+  	rdfs:subClassOf bk:Dimension ;
 	rdfs:comment "is any kind of economic facts which can be totaled" .
-	
+# What is the difference between this class and the XBRL-Dimension?
+
 bk:Entry
   a rdfs:Class ;
   rdfs:subClassOf bk:Transfer ;
@@ -172,3 +175,4 @@ bk:Rubric
 #bk:PersonalAccount
 #  a rdfs:Class ;
 #  rdfs:subClassOf bk:Account .
+# What about other kinds of accounts: real and nominal ?
