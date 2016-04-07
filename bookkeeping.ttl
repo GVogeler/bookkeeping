@@ -4,14 +4,13 @@
 @prefix rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix owl:<http://www.w3.org/2002/07/owl#> .
 # ToDo: 
-#	bk:credit/bk:debit instead of bk:to/bk:from ? Or subClassOf
+#	bk:credit/bk:debit instead of bk:to/bk:from ? Or subClassOf?
 #	Add documentation with rdfs:comment to every class/property defined
 #	xbrl:Dimension is used correctly?
 #
 #	check every class/property if it can be replaced by CIDOC-CRM class
 #	reference appropriate CIDOC-CRM superclasses/superProperties?	
 #
-
 
 bk:Transaction a rdfs:Class .
 # CIDOC-CRM: Event? Built from more than one bk:Transfer
@@ -44,7 +43,7 @@ bk:from
   a rdfs:Property ;
   rdfs:domain bk:Transfer ;
   rdfs:range bk:Between ;
-  rdfs:comment "" .
+  rdfs:comment "A measurable is transfered from one party or account " .
 #
 #CIDOC-CRM:
 #	rdfs:subPropertyOf cidoc-crm:P11_had_participant seems to be good candidate, but it does not cover transfers involving accounts.
@@ -53,18 +52,33 @@ bk:from
 bk:to
   a rdfs:Property ;
   rdfs:domain bk:Transfer ;
-  rdfs:range bk:Between .
+  rdfs:range bk:Between ;
+  rdfs:comment "A measurable is transfered to one party or account " .
 
 bk:transfers
   a rdfs:Property ;
   rdfs:domain bk:Transfer ;
-  rdfs:range bk:Measurable .
+  rdfs:range bk:Measurable ;
+  rdfs:comment "A transfer conveys something." .
 # 
 #	cidoc-crm:P12_occured_in_the_presence_of does make sense? A transcation could be executed far away of the objects transfered (e.g. by contract).
 
 bk:Measurable
 	a rdfs:Class ;
-	rdfs:subClassOf cidoc-crm:E77_Persistent_item .
+	rdfs:subClassOf cidoc-crm:E77_Persistent_item ;
+	rdfs:comment "is something which can be measured." .
+# How is that related to cidoc-crm E55_Type ?
+
+bk:quantity
+	a rdfs:Property ;
+	rdfs:subClassOf cidoc-crm:P90_has_value ;
+	rdfs:domain bk:Measurable .
+#A literal with a numerical datadtype as range
+bk:unit
+	a rdfs:Property ; 
+	rdfs:subClassOf cidoc-crm:P91_has_unit ;
+	rdfs:domain bk:Measurable .
+# Model the measurabel with the help of cidoc-crm:P3_has_dimenion and cidco-crm:E54_Dimension ?
 
 bk:setsPrice
 	a rdfs:Property ;
@@ -73,7 +87,13 @@ bk:setsPrice
 
 bk:Price
 	a rdfs:Class ;
-	rdfs:subClassOf cidoc-crm:E3_Condition_State .
+	rdfs:subClassOf cidoc-crm:E3_Condition_State ;
+	rdfs:comment "is the relationship of the quantity of measruable to another when it is exchanged or demanded in barter or sale." .
+	
+bk:Tax
+	a rdfs:Class ;
+	rdfs:subClassOf bk:Price ;
+	rdfs:comment "sets a relationship of the quantity of measurable to another by legal or other force and is usually only fragmentary to the quantity of the thing taxed." .
 
 bk:priceOf
 	a rdfs:Property ;

@@ -47,32 +47,50 @@
   <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#from">
     <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Transfer"/>
     <rdfs:range rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Between"/>
-    <rdfs:comment></rdfs:comment>
+    <rdfs:comment>A measurable is transfered from one party or account </rdfs:comment>
   </rdfs:Property>
 
   <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#to">
     <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Transfer"/>
     <rdfs:range rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Between"/>
+    <rdfs:comment>A measurable is transfered to one party or account </rdfs:comment>
   </rdfs:Property>
 
   <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#transfers">
     <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Transfer"/>
     <rdfs:range rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Measurable"/>
+    <rdfs:comment>A transfer conveys something.</rdfs:comment>
   </rdfs:Property>
 
   <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Measurable">
     <rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E77_Persistent_item"/>
+    <rdfs:comment>is something which can be measured.</rdfs:comment>
   </rdfs:Class>
+
+  <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#quantity">
+    <rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/P90_has_value"/>
+    <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Measurable"/>
+  </rdfs:Property>
+
+  <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#unit">
+    <rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/P91_has_unit"/>
+    <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Measurable"/>
+  </rdfs:Property>
 
   <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#setsPrice">
     <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Transfer"/>
-    <rdfs:range>
-      <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Price">
-        <rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E3_Condition_State"/>
-      </rdfs:Class>
-    </rdfs:range>
-
+    <rdfs:range rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Price"/>
   </rdfs:Property>
+
+  <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Price">
+    <rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E3_Condition_State"/>
+    <rdfs:comment>is the relationship of the quantity of measruable to another when it is exchanged or demanded in barter or sale.</rdfs:comment>
+  </rdfs:Class>
+
+  <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Tax">
+    <rdfs:subClassOf rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Price"/>
+    <rdfs:comment>sets a relationship of the quantity of measurable to another by legal or other force and is usually only fragmentary to the quantity of the thing taxed.</rdfs:comment>
+  </rdfs:Class>
 
   <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#priceOf">
     <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Measurable"/>
