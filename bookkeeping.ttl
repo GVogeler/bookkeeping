@@ -27,8 +27,9 @@ bk:consists-of
 # cidoc-crm:P9_consist_of seems to be good candidate, but it is only defined by the temporal entailment while the bk:Transfer-bk:Transaction relationship creates a propositional relationship as well.
 
 bk:Transfer a rdfs:Class ;
-	rdfs:subClassOf cidoc-crm:E5_Event ;
-	rdfs:comment "is the action in which one party conveys property rights to another party or in which economic facts of an actor are assigned to an account." .
+	rdfs:subClassOf cidoc-crm:E7_Activity ;
+	rdfs:comment """is the action in which one party conveys property rights to another party or in which economic facts of an actor are assigned to an account.""" .
+# To check how the bookkeeping sentence (debit per credit) should be represented in this as well or if the distinction between transfer of ownership (E8 Acquistion) and attribute assignement in the bookkeeping process (E13 Attribute assignment) is a better solution  
 
 bk:from
   	a rdfs:Property ;
@@ -97,10 +98,9 @@ bk:priceOf
 	
 bk:attested
   a rdfs:Property ;
-  rdfs:subPropertyOf cidoc-crm:P67i_is_referred_to_by ;
+  rdfs:subPropertyOf cidoc-crm:P70i_is_documentd_in ;
   rdfs:domain bk:Transfer ;
   rdfs:range cidoc-crm:E13_Document .
-#	is P70i (is documented in) the better CIDOC equivalent?
 
 # bk:occurs-at owl:sameAs cidoc-crm:P7_took_place_at .
 # bk:occurs-when
