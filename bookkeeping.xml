@@ -178,7 +178,7 @@
 
   <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Service">
     <rdfs:subClassOf rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Measurable"/>
-    <rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E5_Event"/>
+    <rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E7_Activity"/>
     <rdfs:comment>is an activity executed to the benefit of somebody else.</rdfs:comment>
   </rdfs:Class>
 

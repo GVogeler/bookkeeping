@@ -180,7 +180,7 @@ bk:Commodity
 bk:Service
 	a rdfs:Class ;
 	rdfs:subClassOf bk:Measurable ;
-    rdfs:subClassOf <http://www.cidoc-crm.org/cidoc-crm/E5_Event> ;
+    rdfs:subClassOf <http://www.cidoc-crm.org/cidoc-crm/E7_Activity> ;
     rdfs:comment "is an activity executed to the benefit of somebody else." .
   
 bk:status
