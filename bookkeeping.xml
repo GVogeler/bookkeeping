@@ -187,4 +187,14 @@
     <rdfs:comment>describes the completion status of a transaction ('settled', 'in full' etc.)</rdfs:comment>
   </rdfs:Property>
 
+  <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Agent">
+    <rdfs:comment>is somebody acting on behalve of a principal in a way that the economic activity of the agent affects directly the economic status of the principal.</rdfs:comment>
+  </rdfs:Class>
+
+  <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#represents">
+    <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Agent"/>
+    <rdfs:range rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Actor"/>
+    <rdfs:comment>describes which principal is economically replaced by the agent.</rdfs:comment>
+  </rdfs:Property>
+
 </rdf:RDF>

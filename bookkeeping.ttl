@@ -4,6 +4,8 @@
 @prefix rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix owl:<http://www.w3.org/2002/07/owl#> .
 
+# rev. 18-09-11 georg.vogeler@uni-graz.at : add Agent / principal relationship
+
 bk:Transaction a rdfs:Class .
 
 bk:Party a rdfs:Class;
@@ -188,7 +190,15 @@ bk:status
 	rdfs:domain bk:Transaction ;
     rdfs:comment "describes the completion status of a transaction ('settled', 'in full' etc.)" .
 
+bk:Agent
+    a rdfs:Class ;
+    rdfs:comment "is somebody acting on behalve of a principal in a way that the economic activity of the agent affects directly the economic status of the principal." .  
 
+bk:represents
+    a rdfs:Property ;
+    rdfs:domain bk:Agent ;
+    rdfs:range bk:Actor ;
+    rdfs:comment "describes which principal is economically replaced by the agent." . 
 
 #Is this covered by a transfer to a rdf:Party?
 #bk:PersonalAccount
