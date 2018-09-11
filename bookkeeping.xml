@@ -1,17 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
          xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
-  <!--
-        Ontology of economic facts and human actions recorded in historical accounting documents.
-        
-        First Draft 2016-01-06
-        Rev. 2016-03-08
-        Rev. 2016-04-06
-        
-        Georg Vogeler <georg.vogeler@uni-graz.at>
-        
-  -->
-  
+
   <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Transaction">
   </rdfs:Class>
 
@@ -22,7 +12,7 @@
   </rdfs:Class>
 
   <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Account">
-    <rdfs:subClassOf rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Dimension"/>
+    <rdfs:subClassOf rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#GroupOfEconomicFacts"/>
     <rdfs:subClassOf rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Between"/>
     <rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E28_Conceptual_Object"/>
     <rdfs:comment>is an abstract concept of organisation of economic activities being part of a system of evaluation of these economic activities.</rdfs:comment>
@@ -40,8 +30,8 @@
   </rdfs:Property>
 
   <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Transfer">
-    <rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E5_Event"/>
-    <rdfs:comment>is the action in which one party cedes property rights to another parties or economic facts of an actor are assigned to an account.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E7_Activity"/>
+    <rdfs:comment>is the action in which one party conveys property rights to another party or in which economic facts of an actor are assigned to an account.</rdfs:comment>
   </rdfs:Class>
 
   <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#from">
@@ -83,13 +73,19 @@
   </rdfs:Property>
 
   <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Price">
-    <rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E3_Condition_State"/>
-    <rdfs:comment>is the relationship of the quantity of measruable to another when it is exchanged or demanded in barter or sale.</rdfs:comment>
+    <rdfs:subClassOf>
+      <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Conversion">
+        <rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E3_Condition_State"/>
+        <rdfs:comment>is the relationship of the quantity of a measruable to another.</rdfs:comment>
+      </rdfs:Class>
+    </rdfs:subClassOf>
+
+    <rdfs:comment>is the relationship of the quantity of a measruable to another when it is exchanged or demanded in barter or sale.</rdfs:comment>
   </rdfs:Class>
 
   <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Tax">
     <rdfs:subClassOf rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Price"/>
-    <rdfs:comment>sets a relationship of the quantity of measurable to another by legal or other force and is usually only fragmentary to the quantity of the thing taxed.</rdfs:comment>
+    <rdfs:comment>sets a proportion of the quantity of a measurable to another by legal or other force.</rdfs:comment>
   </rdfs:Class>
 
   <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#priceOf">
@@ -98,7 +94,7 @@
   </rdfs:Property>
 
   <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#attested">
-    <rdfs:subPropertyOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by"/>
+    <rdfs:subPropertyOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/P70i_is_documentd_in"/>
     <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Transfer"/>
     <rdfs:range rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E13_Document"/>
   </rdfs:Property>
@@ -132,6 +128,11 @@
     <rdfs:comment>a total is calculated on a group of economic facts, e.g. an account.</rdfs:comment>
   </rdfs:Property>
 
+  <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Balancing">
+    <rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E5_Event"/>
+    <rdfs:comment>is the activity in which a state of economic affairs is fixed for further use.</rdfs:comment>
+  </rdfs:Class>
+
   <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Balance">
     <rdfs:subClassOf rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Total"/>
   </rdfs:Class>
@@ -142,6 +143,7 @@
   </rdfs:Property>
 
   <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#GroupOfEconomicFacts">
+    <rdfs:subClassOf rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Dimension"/>
     <rdfs:comment>is any kind of economic facts which can be totaled</rdfs:comment>
   </rdfs:Class>
 
@@ -167,5 +169,22 @@
     <rdfs:subClassOf rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Dimension"/>
     <rdfs:comment>is a intellectual dimenson of the data expressed with the help of a heading to a list, to a table or to similar methods to group entries.</rdfs:comment>
   </rdfs:Class>
+
+  <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Commodity">
+    <rdfs:subClassOf rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Measurable"/>
+    <rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E19_Physical_Object"/>
+    <rdfs:comment>is an physical object used economic activities.</rdfs:comment>
+  </rdfs:Class>
+
+  <rdfs:Class rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#Service">
+    <rdfs:subClassOf rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Measurable"/>
+    <rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E5_Event"/>
+    <rdfs:comment>is an activity executed to the benefit of somebody else.</rdfs:comment>
+  </rdfs:Class>
+
+  <rdfs:Property rdf:about="http://gams.uni-graz.at/rem/bookkeeping/#status">
+    <rdfs:domain rdf:resource="http://gams.uni-graz.at/rem/bookkeeping/#Transaction"/>
+    <rdfs:comment>describes the completion status of a transaction ('settled', 'in full' etc.)</rdfs:comment>
+  </rdfs:Property>
 
 </rdf:RDF>

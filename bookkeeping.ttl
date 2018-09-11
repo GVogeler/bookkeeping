@@ -171,6 +171,25 @@ bk:Rubric
   rdfs:subClassOf bk:Dimension ;
   rdfs:comment "is a intellectual dimenson of the data expressed with the help of a heading to a list, to a table or to similar methods to group entries." .
 
+bk:Commodity
+	a rdfs:Class ;
+	rdfs:subClassOf bk:Measurable ;
+    rdfs:subClassOf <http://www.cidoc-crm.org/cidoc-crm/E19_Physical_Object> ;
+    rdfs:comment "is an physical object used economic activities." .
+
+bk:Service
+	a rdfs:Class ;
+	rdfs:subClassOf bk:Measurable ;
+    rdfs:subClassOf <http://www.cidoc-crm.org/cidoc-crm/E5_Event> ;
+    rdfs:comment "is an activity executed to the benefit of somebody else." .
+  
+bk:status
+	a rdfs:Property ;
+	rdfs:domain bk:Transaction ;
+    rdfs:comment "describes the completion status of a transaction ('settled', 'in full' etc.)" .
+
+
+
 #Is this covered by a transfer to a rdf:Party?
 #bk:PersonalAccount
 #  a rdfs:Class ;
