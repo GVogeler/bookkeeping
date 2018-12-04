@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:bk="https://gams.uni-graz.at/o:depcha.bookkeeping" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:gams="https://gams.uni-graz.at/o:gams-ontology/#"
+	xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+	xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:xsd="http://www.w3.org/2001/XMLSchema/rdf-schema" xml:lang="en">
+	<owl:Ontology rdf:about="https://gams.uni-graz.at/o:depcha.bookkeeping">
+		<owl:versionInfo>Version 1.0</owl:versionInfo>
+		<rdfs:label xml:lang="en">Bookkeeping Data model for Historical Accounts</rdfs:label>
+		<rdfs:label xml:lang="de">Datenmodell für historische Rechnungsunterlagen</rdfs:label>
+		<rdfs:comment xml:lang="en">This datamodel describes processes in historical accounting.</rdfs:comment>
+		<rdfs:comment xml:lang="de">Dieses Datenmodell beschreibt Buchungsprozesse in historischen Rechnungsunterlagen</rdfs:comment>
+		<rdfs:seeAlso rdf:resource="https://www.wikidata.org/wiki/Q4116214"/>
+		<dc:description>The Bookkeeping Ontology is a common knowledge domain and conceptual data model for historical accounting facts. The basis for it is the REA model and it is compliant with the
+			CIDOC CRM. It formalizes the interpretation of bk:Transaction of bk:Measurable from one bk:Between to another, where bk:Between is defined as an abstract class, which unites bk:Accounts
+			(e.g. a cash account) or bk:Party (actor) or a unknown bk:Group (4 farmers pay a tax). Its physical representation in a historical source is attests by a bk:Entry. The bk:Entry is an information fragment of a bk:Transaction often
+			only naming one party as the other can be implicit in the textual context of the entry. Further information on the temporal (bk:when), spatial (bk:where) dimension of a bk:Transaction can
+			be expressed optionally, as well as a the status of it (bk:status). According to a research question a bk:Transaction can be assigned to a specific context. Every bk:Transaction
+			bk:consistsOf at least one bk:Transfer. A single bk:Transfer describes the action of transfering a bk:Measurable in one direction (bk:from or bk:to). A bk:Measurable is everything that can
+			be quantified and is further divided into bk:EconomicGood (bk:Service and bk:Commodity) and bk:MonetaryValues (bk:Tax and bk:Price) with a information about the currency. 
+			Furthermore bk:Measurable is represented by bk:unit (what kind of unit is used), bk:quanity (in which quantity it is measured) and bk:text containing the textfragment of the original source. 
+			bk:EconomicGoods can be classified (what is measured) and can have a bk:Price. A bk:Transfer can be carried out bk:by a bk:Agent. When writing it down into the ledger, bk:debit and bk:credit are coded optionally. </dc:description>
+		<dc:title>Bookkeeping Datamodel for Historical Accounts</dc:title>
+		<dc:creator>Christopher Pollin</dc:creator>
+		<dc:creator>Georg Vogeler</dc:creator>
+		<dc:date>2018</dc:date>
+		<dc:identifier>https://gams.uni-graz.at/o:depcha.bookkeeping</dc:identifier>
+		<dc:publisher>Centre for Information Modellung, University of Graz</dc:publisher>
+		<dc:rights>https://creativecommons.org/licenses/by-nc/4.0</dc:rights>
+	</owl:Ontology>
+	<rdfs:Class rdf:about="https://gams.uni-graz.at/o:depcha.bookkeeping#Transaction">
+		<rdfs:label xml:lang="en">Transaction</rdfs:label>
+		<rdfs:label xml:lang="de">Transaktion</rdfs:label>
+		<rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E28_Conceptual_Object"/>
+		<rdfs:comment xml:lang="en">A financial transaction is an agreement or communication, carried out between a buyer and a seller to exchange an asset.</rdfs:comment>
+		<rdfs:comment xml:lang="de">Eine Finanztransaktion ist eine Vereinbarung oder ein Kommunikationsprozess, die zwischen einem Käufer und einem Verkäufer durchgeführt wird, um einen Vermögenswert
+			oder ein Wirtschaftsgut auszutauschen.</rdfs:comment>
+		<rdfs:seeAlso rdf:resource="https://www.wikidata.org/wiki/Q1166072"/>
+		<skos:example rdf:parseType="Literal">
+			<div ana="#bk_entry">
+				<date ana="#bk_when" when="1828-09-22">22nd Septemper 1828</date> To order upon <name ana="#bk_to">T. Smith</name> for 3/ <measure ana="#bk_money #bk_to" quantity="50" unit="cents"
+					>50</measure>
+			</div>
+		</skos:example>
+		<skos:example>&lt;bk:Transaction&gt; bk:consistsOf &lt;bk:Transfer&gt;; bk:when &quot;1828-09-22&quot;; bk:entry &quot;To order upon T. Smith for 3/ 50&quot;.</skos:example>
+	</rdfs:Class>
+	<rdfs:Class rdf:about="https://gams.uni-graz.at/o:depcha.bookkeeping#Transfer">
+		<rdfs:label xml:lang="en">Transfer</rdfs:label>
+		<rdfs:label xml:lang="de">Transfer</rdfs:label>
+		<rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E5_Event"/>
+		<rdfs:comment xml:lang="en">A Transfer is the action in which one party cedes property rights to another parties.</rdfs:comment>
+		<rdfs:comment xml:lang="de">Als Transfer versteht man die Aktion in der Geld, Waren o. Ä. von einem Konto oder Akteur zum anderen übermittelt wird.</rdfs:comment>
+		<skos:example rdf:parseType="Literal">
+			<div ana="#bk_entry">
+				<measure ana="#bk_money #bk_from" quantity="10" unit="dollars">10$</measure> from <name ana="#bk_from">T. Smith</name> to <name ana="#bk_to">Darius D.</name>
+			</div>
+		</skos:example>
+		<skos:example>&lt;bk:Transfer&gt; bk:transfers &lt;bk:Commodity&gt;; bk:from &lt;bk:Between&gt;; bk:to &lt;bk:Between&gt;.</skos:example>
+	</rdfs:Class>
+	<rdfs:Class rdf:about="https://gams.uni-graz.at/o:depcha.bookkeeping#Between">
+		<rdfs:label xml:lang="en">Between</rdfs:label>
+		<rdfs:label xml:lang="de">Between</rdfs:label>
+		<rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E28_Conceptual_Object"/>
+		<rdfs:comment xml:lang="en">An abstract class for any concept which can be part of transaction in abstract bookkeeping, connecting bk:from and bk:to.</rdfs:comment>
+		<rdfs:comment xml:lang="de">Ein genersiche Klasse, die bk:from und bk:to verbindet.</rdfs:comment>
+		<skos:example rdf:parseType="Literal">
+			<name ana="#bk_to">T. Smith</name>
+		</skos:example>
+		<skos:example>&lt;bk:Transfer&gt; bk:to &lt;bk:Between&gt;. &lt;bk:Between&gt; bk:name &quot;T. Smith&quot;.</skos:example>
+	</rdfs:Class>
+	<rdfs:Class rdf:about="https://gams.uni-graz.at/o:depcha.bookkeeping#Agent">
+		<rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E39_Actor"/>
+		<rdfs:label xml:lang="en">Agent</rdfs:label>
+		<rdfs:label xml:lang="de">Vermittler</rdfs:label>
+		<rdfs:comment xml:lang="en">Someone delivers something for somebody else.</rdfs:comment>
+		<rdfs:comment xml:lang="de"/>
+		<skos:example rdf:parseType="Literal"> To ax dlvd <name ana="#bk_agent" ref="#pers.1">By Puffer</name> 9/1</skos:example>
+		<skos:example>&lt;bk:Transfer&gt; bk:by &lt;bk:Agent&gt;.</skos:example>
+	</rdfs:Class>
+	<rdfs:Class rdf:about="https://gams.uni-graz.at/o:depcha.bookkeeping#TypeAssignment">
+		<rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E17_Type_Assignment"/>
+		<rdfs:label xml:lang="en">TypeAssignment</rdfs:label>
+		<rdfs:label xml:lang="de">Kontextzuordnung</rdfs:label>
+		<rdfs:comment xml:lang="en">Assigns transactions to a context as a scientific interpretation.</rdfs:comment>
+		<rdfs:comment xml:lang="de">Weist Transaktionen als fachwissenschaftliche Interpretation einem Kontext zu zusammen.</rdfs:comment>
+		<skos:example rdf:parseType="Literal">
+			<div ana="#bk_entry #bk_assigned">To ax dlvd By Puffer 9/1</div>
+		</skos:example>
+		<skos:example>&lt;bk:Transaction&gt; bk:assigned &lt;bk:TypeAssignment&gt;.</skos:example>
+	</rdfs:Class>
+	<rdfs:Class rdf:about="https://gams.uni-graz.at/o:depcha.bookkeeping#Account">
+		<rdfs:label xml:lang="en">Account</rdfs:label>
+		<rdfs:label xml:lang="de">Konto</rdfs:label>
+		<rdfs:subClassOf rdf:resource="https://gams.uni-graz.at/o:depcha.bookkeeping#Between"/>
+		<rdfs:comment xml:lang="en">An account refers to assets, liabilities, income, expenses, and equity, as represented by individual ledger pages, to which changes in value are chronologically
+			recorded with debit and credit entries.</rdfs:comment>
+		<rdfs:comment xml:lang="de">Ein Konto ist die zentrale Datenstruktur in der Buchführung sowie im Zahlungsverkehr.</rdfs:comment>
+		<rdfs:seeAlso rdf:resource="https://www.wikidata.org/wiki/Q508295"/>
+		<skos:example rdf:parseType="Literal">
+			<span ana="#bk_from #bk_account" ref="#acc_1">Cash Account</span>
+		</skos:example>
+		<skos:example>&lt;bk:Account&gt; bk:name &quot;Cash Account&quot;.</skos:example>
+	</rdfs:Class>
+	<rdfs:Class rdf:about="https://gams.uni-graz.at/o:depcha.bookkeeping#Group">
+		<rdfs:label xml:lang="en">Group</rdfs:label>
+		<rdfs:label xml:lang="de">Gruppe</rdfs:label>
+		<rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E74_Group"/>
+		<rdfs:subClassOf rdf:resource="https://gams.uni-graz.at/o:depcha.bookkeeping#Between"/>
+		<rdfs:comment xml:lang="en">A group of agents involved togehter in a transaction.</rdfs:comment>
+		<rdfs:comment xml:lang="de">Eine Gruppe von Akteuren ist gemeinsam an einer Transaktion beteiligt.</rdfs:comment>
+		<skos:example rdf:parseType="Literal">
+			<span ana="#bk_from #bk_group" ref="#group_1">4 farmers and 1 smith</span> payed a tax for land. </skos:example>
+		<skos:example>&lt;bk:Group&gt; bk:name &quot;4 farmers and 1 smith&quot;.</skos:example>
+	</rdfs:Class>
+	<rdfs:Class rdf:about="https://gams.uni-graz.at/o:depcha.bookkeeping#Party">
+		<rdfs:label xml:lang="en">Party</rdfs:label>
+		<rdfs:label xml:lang="de">Akteur</rdfs:label>
+		<rdfs:subClassOf rdf:resource="https://gams.uni-graz.at/o:depcha.bookkeeping#Between"/>
+		<rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E39_Actor"/>
+		<rdfs:comment xml:lang="en">An actor in a transaction.</rdfs:comment>
+		<rdfs:comment xml:lang="de">Ein Akteur in einer Transaktion.</rdfs:comment>
+		<rdfs:seeAlso rdf:resource="https://www.wikidata.org/wiki/Q508295"/>
+		<skos:example rdf:parseType="Literal">
+			<name ana="#bk_from #bk_party" ref="#person_1">Christopher Pollin</name>
+		</skos:example>
+		<skos:example>&lt;bk:Party&gt; bk:name &quot;Christopher Pollin&quot;.</skos:example>
+	</rdfs:Class>
+	<rdfs:Class rdf:about="https://gams.uni-graz.at/o:depcha.bookkeeping#Measurable">
+		<rdfs:label xml:lang="en">Measurable</rdfs:label>
+		<rdfs:label xml:lang="de">Quantifizierbares</rdfs:label>
+		<rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E71_Man-Made_Thing"/>
+		<rdfs:comment xml:lang="en">Everything that can be quantified.</rdfs:comment>
+		<rdfs:comment xml:lang="de">Alles was quantifiziert (gezählt) werden kann</rdfs:comment>
+	</rdfs:Class>
+	<rdfs:Class rdf:about="https://gams.uni-graz.at/o:depcha.bookkeeping#EconomicGood">
+		<rdfs:label xml:lang="en">Economic Good</rdfs:label>
+		<rdfs:label xml:lang="de">Wirtschaftsgut</rdfs:label>
+		<rdfs:comment xml:lang="en">An economic good is a good or service that has a benefit (utility) to society. Also, economic goods have a degree of scarcity and therefore an opportunity cost.</rdfs:comment>
+		<rdfs:subClassOf rdf:resource="https://gams.uni-graz.at/o:depcha.bookkeeping#Measurable"/>
+	</rdfs:Class>
+	<rdfs:Class rdf:about="https://gams.uni-graz.at/o:depcha.bookkeeping#Commodity">
+		<rdfs:label xml:lang="en">Commodity</rdfs:label>
+		<rdfs:label xml:lang="de">Ware</rdfs:label>
+		<rdfs:subClassOf rdf:resource="https://gams.uni-graz.at/o:depcha.bookkeeping#EconomicGood"/>
+		<rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E19_Physical_Object"/>
+		<rdfs:comment xml:lang="en">A commodity is an economic good</rdfs:comment>
+		<rdfs:comment xml:lang="de">Handelsware ist eine Sammelbezeichnung für die von Gewerbetreibenden umgesetzten materiellen Wirtschaftsgüter.</rdfs:comment>
+		<rdfs:seeAlso rdf:resource="https://www.wikidata.org/wiki/Q317088"/>
+		<skos:example rdf:parseType="Literal">
+			<measure ana="#bk_commodity" commodity="commodity" quantity="1" unit="cow">1 cow</measure>
+		</skos:example>
+		<skos:example rdf:parseType="Literal">
+			<measure ana="#bk_commodity" commodity="sugar" quantity="1" unit="lb">1 lb Sugar</measure>
+		</skos:example>
+		<skos:example> bk_when;bk_text;bk_from;bk_to;bk_commodity 1690-10-01;Christopher gives Georg 1 cow ;Christopher;Georg;1 cow </skos:example>
+		<skos:example> bk_when;bk_text;bk_from;bk_to;bk_money;bk_commodity 1690-10-01;Christopher buys 3 bags rice from Georg for 10 €;Christopher;Georg;10 (€);3 (bags rice) </skos:example>
+	</rdfs:Class>
+	<rdfs:Class rdf:about="https://gams.uni-graz.at/o:depcha.bookkeeping#Service">
+		<rdfs:label xml:lang="en">Service</rdfs:label>
+		<rdfs:label xml:lang="de">Dienstleistung</rdfs:label>
+		<rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E7_Activity"/>
+		<rdfs:subClassOf rdf:resource="https://gams.uni-graz.at/o:depcha.bookkeeping#EconomicGood"/>
+		<rdfs:comment xml:lang="en">A service is a transaction in which no physical goods are transferred from the seller to the buyer.</rdfs:comment>
+		<rdfs:comment xml:lang="de">Ein immaterielles Gut, das entsteht, wenn ein Wirtschaftssubjekt für ein anderes eine entgeltliche Tätigkeit ausübt</rdfs:comment>
+		<rdfs:seeAlso rdf:resource="https://www.wikidata.org/wiki/Q7406919"/>
+		<skos:example rdf:parseType="Literal">
+			<measure ana="#bk_service" commodity="work" quantity="3" unit="hours"> cutting trees for 3 hours.</measure>
+		</skos:example>
+		<skos:example rdf:parseType="Literal">
+			<span ana="#bk_service">By work</span>
+		</skos:example>
+		<skos:example> bk_whe;bk_text;bk_from;bk_to;bk_money;bk_commodity; 2018-10-01;Christopher buys 3 bags rice from Georg for 10 €;Christopher;Georg;10 (€);3 (bags rice) </skos:example>
+	</rdfs:Class>
+	<rdfs:Class rdf:about="https://gams.uni-graz.at/o:depcha.bookkeeping#MonetaryValue">
+		<rdfs:label xml:lang="en">Monetary Value</rdfs:label>
+		<rdfs:label xml:lang="de">Geldwert</rdfs:label>
+		<rdfs:subClassOf rdf:resource="https://gams.uni-graz.at/o:depcha.bookkeeping#Measurable"/>
+		<rdfs:comment xml:lang="en">The amount of value an item or a service has in relation to if it were sold for cash to a willing buyer. A Monetary Value can consist of subtotals, which are
+			monetary values too. </rdfs:comment>
+		<rdfs:comment xml:lang="de">Geldwert ist in der Volkswirtschaftslehre das Austauschverhältnis zwischen Geld und Gütern oder Dienstleistungen.</rdfs:comment>
+		<rdfs:seeAlso rdf:resource="https://www.wikidata.org/wiki/Q1499548"/>
+		<skos:example rdf:parseType="Literal">
+			<measure ana="#bk_money" commodity="currency" quantity="1" unit="dollars">1 $</measure>
+			<measure ana="#bk_money" commodity="currency" quantity="50" unit="gams.uni-graz.at/currency#cents">50 c</measure>
+		</skos:example>
+		<skos:example>bk_when;bk_text;bk_from;bk_to;bk_money; 1808-08-01;1/4 lb Powder 2/6 2 lb Shot 5/;Stagville;William Pettigrew Jr.;7 (s) 6 (d);0,25 (lb Powder) 0.33 (lb Shot)</skos:example>
+	</rdfs:Class>
+	<rdfs:Class rdf:about="https://gams.uni-graz.at/o:depcha.bookkeeping#Price">
+		<rdfs:label xml:lang="en">Price</rdfs:label>
+		<rdfs:label xml:lang="de">Preis</rdfs:label>
+		<rdfs:subClassOf rdf:resource="https://gams.uni-graz.at/o:depcha.bookkeeping#MonetaryValue"/>
+		<rdfs:comment xml:lang="en">The quantity of payment or compensation given by one party to another in return for one unit of goods or services.</rdfs:comment>
+		<rdfs:comment xml:lang="de">In Geldeinheiten gezahlte Gegenleistung für eine bestimmte Mengeneinheit von erworbenen Produkten oder Dienstleistungen</rdfs:comment>
+		<rdfs:seeAlso rdf:resource="https://www.wikidata.org/wiki/Q160151"/>
+		<skos:example rdf:parseType="Literal">
+			<measure ana="#bk_commodity" commodity="powder" quantity="0.25" unit="lb">1/4 lb Powder</measure> for <measure ana="#bk_price" commodity="currency" quantity="2" unit="shillinh">2
+				s</measure>
+		</skos:example>
+		<skos:example>&lt;bk:Transfer&gt; bk:transfers &lt;bk:Price&gt;. &lt;bk:Price&gt; bk:from &lt;bk:Between&gt;.</skos:example>
+	</rdfs:Class>
+	<rdfs:Class rdf:about="https://gams.uni-graz.at/o:depcha.bookkeeping#Tax">
+		<rdfs:label xml:lang="en">Tax</rdfs:label>
+		<rdfs:label xml:lang="de">Steuer</rdfs:label>
+		<rdfs:subClassOf rdf:resource="https://gams.uni-graz.at/o:depcha.bookkeeping#MonetaryValue"/>
+		<rdfs:comment xml:lang="en">Method to impose financial charge or other levy upon a taxpayer by a government or functional equivalent.</rdfs:comment>
+		<rdfs:comment xml:lang="de">Öffentlich-rechtliche Abgabe von Geld</rdfs:comment>
+		<rdfs:seeAlso rdf:resource="https://www.wikidata.org/wiki/Q8161"/>
+		<skos:example rdf:parseType="Literal">
+			<measure ana="#bk_tax" commodity="currency" quantity="30" unit="$">paying 30 $ taxes</measure>
+		</skos:example>
+		<skos:example>&lt;bk:Tax&gt; bk:transfers &lt;bk:Tax&gt;. &lt;bk:Tax; bk:from &lt;bk:Between&gt;.</skos:example>
+	</rdfs:Class>
+	<rdf:Property rdf:about="https://gams.uni-graz.at/o:depcha.bookkeeping#transfers">
+		<rdfs:label xml:lang="en">transfers</rdfs:label>
+		<rdfs:label xml:lang="de">übermitteln</rdfs:label>
+		<rdfs:comment xml:lang="en">A transfer conveys something. Multiple (at least on) transfers can describe a transaction.</rdfs:comment>
+		<rdfs:comment xml:lang="de">Etwas wird an jemand anderen übermittel.</rdfs:comment>
+		<rdfs:domain rdf:resource="https://gams.uni-graz.at/o:depcha.bookkeeping#Transfer"/>
+		<rdfs:range rdf:resource="https://gams.uni-graz.at/o:depcha.bookkeeping#Measurable"/>
+	</rdf:Property>
+	<rdf:Property rdf:about="https://gams.uni-graz.at/o:depcha.bookkeeping#from">
+		<rdfs:label xml:lang="en">from</rdfs:label>
+		<rdfs:label xml:lang="de">von</rdfs:label>
+		<rdfs:comment xml:lang="en">Something goes away from somebody. An account decreases.</rdfs:comment>
+		<rdfs:comment xml:lang="de">Etwas geht von einem Akteur / Konto weg.</rdfs:comment>
+		<rdfs:domain rdf:resource="https://gams.uni-graz.at/o:depcha.bookkeeping#Transfer"/>
+		<rdfs:range rdf:resource="https://gams.uni-graz.at/o:depcha.bookkeeping#Between"/>
+		<skos:example rdf:parseType="Literal">
+			<measure ana="#bk_money #bk_from" commodity="currency" quantity="260" unit="dollars">260 $</measure> from <name ana="#bk_from" ref="org.3">Wollaeger</name> to <name ana="#bk_to"
+				ref="Schlitz">Schlitz</name>
+		</skos:example>
+		<skos:example>&lt;bk:Transfer&gt; bk:transfers &lt;bk:Measurable&gt;; bk:from &lt;bk:Between&gt;.</skos:example>
+	</rdf:Property>
+	<rdf:Property rdf:about="https://gams.uni-graz.at/o:depcha.bookkeeping#to">
+		<rdfs:label xml:lang="en">to</rdfs:label>
+		<rdfs:label xml:lang="de">nach</rdfs:label>
+		<rdfs:comment xml:lang="en">Something goes to somebody. An account increases.</rdfs:comment>
+		<rdfs:comment xml:lang="de">Etwas geht zu einem Akteur / Konto.</rdfs:comment>
+		<rdfs:domain rdf:resource="https://gams.uni-graz.at/o:depcha.bookkeeping#Transfer"/>
+		<rdfs:range rdf:resource="https://gams.uni-graz.at/o:depcha.bookkeeping#Between"/>
+		<skos:example rdf:parseType="Literal">
+			<measure ana="#bk_money #bk_to" commodity="currency" quantity="260" unit="dollars">260 $</measure> from <name ana="#bk_from" ref="org.3">Wollaeger</name> to <name ana="#bk_to"
+				ref="Schlitz">Schlitz</name>
+		</skos:example>
+		<skos:example>&lt;bk:Transfer&gt; bk:transfers &lt;bk:Measurable&gt;; bk:to &lt;bk:Between&gt;.</skos:example>
+	</rdf:Property>
+	<rdf:Property rdf:about="https://gams.uni-graz.at/o:depcha.bookkeeping#consistsOf">
+		<rdfs:label xml:lang="en">consistsOf</rdfs:label>
+		<rdfs:label xml:lang="de">besteht aus</rdfs:label>
+		<rdfs:comment xml:lang="en">A transaction consists of a number of transfers.</rdfs:comment>
+		<rdfs:comment xml:lang="de">Eine Transaktion besteht aus mehreren Transfers.</rdfs:comment>
+		<rdfs:domain rdf:resource="https://gams.uni-graz.at/o:depcha.bookkeeping#Transaction"/>
+		<rdfs:range rdf:resource="https://gams.uni-graz.at/o:depcha.bookkeeping#Transfer"/>
+		<skos:example>&lt;bk:Transaction&gt; bk:consistsOf &lt;bk:Transfer&gt;.</skos:example>
+	</rdf:Property>
+	<rdf:Property rdf:about="https://gams.uni-graz.at/o:depcha.bookkeeping#attestedBy">
+		<rdfs:label xml:lang="en">attestedBy</rdfs:label>
+		<rdfs:label xml:lang="de">beglaubigt durch</rdfs:label>
+		<rdfs:comment xml:lang="en">A transfer has a physical representation (text) in a source.</rdfs:comment>
+		<rdfs:comment xml:lang="de">Ein Transfer besitz einen physische (textuelle) Representation in einer Quelle.</rdfs:comment>
+		<rdfs:domain rdf:resource="https://gams.uni-graz.at/o:depcha.bookkeeping#Transaction"/>
+		<rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+		<skos:example rdf:parseType="Literal">
+			<div ana="bk_entry">To ax dlvd By Puffer 9/1</div>
+		</skos:example>
+		<skos:example>&lt;bk:Transaction&gt; bk:entry &quot;To ax dlvd By Puffer 9/1 1 50&quot;.</skos:example>
+	</rdf:Property>
+	<rdf:Property rdf:about="https://gams.uni-graz.at/o:depcha.bookkeeping#assigned">
+		<rdfs:label xml:lang="en">assigned</rdfs:label>
+		<rdfs:label xml:lang="de">zugeordnet</rdfs:label>
+		<rdfs:comment xml:lang="en">Assigns transactions to a specific type or context. This decision is made by a scholar. This can be done in the course of a specific research question. Everything n
+			the @ana not starting with bk_ ist a type assignment</rdfs:comment>
+		<rdfs:comment xml:lang="de">Ordnet Transaktionen einem bestimmten Typ bzw. Kontext zu. Diese Entscheidung wird vom Fachwissenschaftler getroffen und können im Zuge einer bestimmten
+			Forschungsfrage stehen.</rdfs:comment>
+		<rdfs:domain rdf:resource="https://gams.uni-graz.at/o:depcha.bookkeeping#Transaction"/>
+		<rdfs:range rdf:resource="https://gams.uni-graz.at/o:depcha.bookkeeping#TypeAssignment"/>
+		<rdfs:subPropertyOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/P42_assigned"/>
+		<skos:example rdf:parseType="Literal">
+			<div ana="#bk_entry #TypeAssignment">To ax dlvd By Puffer 9/1</div>
+		</skos:example>
+		<skos:example>&lt;bk:Transaction&gt; bk:assigned &lt;bk:TypeAssignment&gt;.</skos:example>
+	</rdf:Property>
+	<rdf:Property rdf:about="https://gams.uni-graz.at/o:depcha.bookkeeping#by">
+		<rdfs:label xml:lang="en">by</rdfs:label>
+		<rdfs:label xml:lang="de">bei</rdfs:label>
+		<rdfs:comment xml:lang="en">A transfer can be carried out by an agent.</rdfs:comment>
+		<rdfs:comment xml:lang="de">Ein Transfer kann durch eine dritte Person vermittelt bzw. durchgeführt werden.</rdfs:comment>
+		<rdfs:domain rdf:resource="https://gams.uni-graz.at/o:depcha.bookkeeping#Transfer"/>
+		<rdfs:range rdf:resource="https://gams.uni-graz.at/o:depcha.bookkeeping#Agent"/>
+		<skos:example rdf:parseType="Literal"> To ax dlvd <name ana="#bk_Agent" ref="pers.1">By Puffer</name> 9/1 </skos:example>
+		<skos:example>&lt;bk:Transfer&gt; bk:by &lt;bk:Agent&gt;.</skos:example>
+	</rdf:Property>
+	<rdf:Property rdf:about="https://gams.uni-graz.at/o:depcha.bookkeeping#price">
+		<rdfs:label xml:lang="en">has price</rdfs:label>
+		<rdfs:label xml:lang="de">hat Preis</rdfs:label>
+		<rdfs:comment xml:lang="en">A bk:EconomicGood can have a bk:Price.</rdfs:comment>
+		<rdfs:comment xml:lang="de">Ein bk:EconomicGood kann einen Preis haben.</rdfs:comment>
+		<rdfs:domain rdf:resource="https://gams.uni-graz.at/o:depcha.bookkeeping#EconomicGood"/>
+		<rdfs:range rdf:resource="https://gams.uni-graz.at/o:depcha.bookkeeping#Price"/>
+		<skos:example rdf:parseType="Literal">
+			<measure ana="#bk_price" quantity="5" unit="dollar">5 $</measure>
+		</skos:example>
+		<skos:example>&lt;bk:EconomicGood&gt; bk:hasPrice &lt;bk:Price&gt;.</skos:example>
+	</rdf:Property>
+	<rdf:Property rdf:about="https://gams.uni-graz.at/o:depcha.bookkeeping#converts">
+		<rdfs:label xml:lang="en">converts</rdfs:label>
+		<rdfs:label xml:lang="de">kovertiert</rdfs:label>
+		<rdfs:comment xml:lang="en">A bk:Price converts a bk:EconomicGood. (inverse of bk:hasPrice)</rdfs:comment>
+		<rdfs:domain rdf:resource="https://gams.uni-graz.at/o:depcha.bookkeeping#Price"/>
+		<rdfs:range rdf:resource="https://gams.uni-graz.at/o:depcha.bookkeeping#EconomicGood"/>
+	</rdf:Property>
+	<rdf:Property rdf:about="https://gams.uni-graz.at/o:depcha.bookkeeping#text">
+		<rdfs:label xml:lang="en">text</rdfs:label>
+		<rdfs:label xml:lang="de">hat Text</rdfs:label>
+		<rdfs:comment xml:lang="en">the textual representation of an entitiy.</rdfs:comment>
+		<rdfs:comment xml:lang="de">Eine textuelle Referenz einer Entität</rdfs:comment>
+		<rdfs:domain rdf:resource="https://gams.uni-graz.at/o:depcha.bookkeeping#Measurable"/>
+		<rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+		<skos:example rdf:parseType="Literal">
+			<measure ana="#bk_service">5 hours of work</measure>
+		</skos:example>
+		<skos:example>&lt;Service&gt; bk:text &quot;5 hours of work&quot;.</skos:example>
+	</rdf:Property>
+	<rdf:Property rdf:about="https://gams.uni-graz.at/o:depcha.bookkeeping#debit">
+		<rdfs:label xml:lang="en">debit</rdfs:label>
+		<rdfs:label xml:lang="de">Soll</rdfs:label>
+		<rdfs:comment xml:lang="en">Marks an bk:Transfer as a Transfer to a credit account. The money obtained with the credits is destined as debit in transaction accountsm like
+			assets.</rdfs:comment>
+		<rdfs:comment xml:lang="de">Markiert eine bk:Transfer als einen Transfer auf ein ein Soll-Konto, wie z.B. Vermögenswerte wie Bar- und Bankvermögen.</rdfs:comment>
+		<rdfs:domain rdf:resource="https://gams.uni-graz.at/o:depcha.bookkeeping#Transfer"/>
+		<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+		<rdfs:seeAlso rdf:resource="https://www.wikidata.org/wiki/Q5248104"/>
+		<skos:example rdf:parseType="Literal">
+			<name ana="#bk_to #bk_debit" ref="#debitAccount.1">Cash Account</name>
+		</skos:example>
+		<skos:example>&lt;bk:Transfer&gt; bk:debit &quot;true&quot;.</skos:example>
+	</rdf:Property>
+	<rdf:Property rdf:about="https://gams.uni-graz.at/o:depcha.bookkeeping#credit">
+		<rdfs:label xml:lang="en">credit</rdfs:label>
+		<rdfs:label xml:lang="de">Haben</rdfs:label>
+		<rdfs:comment xml:lang="en">Marks an bk:Transfer as a transfer on the credit account. The sources for spending money in transaction account is credit, like liabilities.</rdfs:comment>
+		<rdfs:comment xml:lang="de">Markiert eine bk:Transfer als einen Transfer auf ein Haben-Konto, wie z.B. Verbindlichkeiten wie Kredite und Schulden.</rdfs:comment>
+		<rdfs:domain rdf:resource="https://gams.uni-graz.at/o:depcha.bookkeeping#Transfer"/>
+		<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+		<rdfs:seeAlso rdf:resource="https://www.wikidata.org/wiki/Q305253"/>
+		<skos:example rdf:parseType="Literal">
+			<name ana="#bk_to #bk_credit" ref="11833">Credit Account</name>
+		</skos:example>
+		<skos:example>&lt;bk:Transfer&gt; bk:credit &quot;true&quot;.</skos:example>
+	</rdf:Property>
+	<rdf:Property rdf:about="https://gams.uni-graz.at/o:depcha.bookkeeping#currency">
+		<rdfs:label xml:lang="en">currency</rdfs:label>
+		<rdfs:label xml:lang="de">Währung</rdfs:label>
+		<rdfs:comment xml:lang="en">A bk:MonetaryValue has a currency (text or URI)</rdfs:comment>
+		<rdfs:comment xml:lang="de">Ein bk:MonetaryValue hat eine Währung.</rdfs:comment>
+		<rdfs:domain rdf:resource="https://gams.uni-graz.at/o:depcha.bookkeeping#MonetaryValue"/>
+		<rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+		<rdfs:seeAlso rdf:resource="https://www.wikidata.org/wiki/Q13582682"/>
+		<skos:example rdf:parseType="Literal">
+			<measure ana="#bk_commodity" commodity="wood" quantity="10" unit="sticks">10 wooden sticks</measure>
+		</skos:example>
+		<skos:example rdf:parseType="Literal">
+			<measure ana="#bk_service" commodity="cutting" quantity="2" unit="hours">cutting sticks for two hours</measure>
+		</skos:example>
+		<skos:example>&lt;bk:Commodity&gt; bk:unit &quot;sticks&quot;; bk:quantity &quot;10&quot;; bk:classified &quot;wood&quot;.</skos:example>
+		<skos:example>&lt;bk:Commodity&gt; bk:unit &quot;cutting&quot;; bk:quantity &quot;2&quot;; bk:classified &quot;hours&quot;.</skos:example>
+	</rdf:Property>	
+	<rdf:Property rdf:about="https://gams.uni-graz.at/o:depcha.bookkeeping#classified">
+		<rdfs:label xml:lang="en">classified</rdfs:label>
+		<rdfs:label xml:lang="de">klassifiziert</rdfs:label>
+		<rdfs:comment xml:lang="en">A commodity or service can be classified.</rdfs:comment>
+		<rdfs:comment xml:lang="de">Ein Gut oder eine Dienstleistung kann klassifiziert werden.</rdfs:comment>
+		<rdfs:domain rdf:resource="https://gams.uni-graz.at/o:depcha.bookkeeping#EconomicGood"/>
+		<rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+		<rdfs:seeAlso rdf:resource="https://www.wikidata.org/wiki/Q13582682"/>
+		<skos:example rdf:parseType="Literal">
+			<measure ana="#bk_commodity" commodity="wood" quantity="10" unit="sticks">10 wooden sticks</measure>
+		</skos:example>
+		<skos:example rdf:parseType="Literal">
+			<measure ana="#bk_service" commodity="cutting" quantity="2" unit="hours">cutting sticks for two hours</measure>
+		</skos:example>
+		<skos:example>&lt;bk:Commodity&gt; bk:unit &quot;sticks&quot;; bk:quantity &quot;10&quot;; bk:classified &quot;wood&quot;.</skos:example>
+		<skos:example>&lt;bk:Commodity&gt; bk:unit &quot;cutting&quot;; bk:quantity &quot;2&quot;; bk:classified &quot;hours&quot;.</skos:example>
+	</rdf:Property>
+	<rdf:Property rdf:about="https://gams.uni-graz.at/o:depcha.bookkeeping#quantity">
+		<rdfs:label xml:lang="en">quantity</rdfs:label>
+		<rdfs:label xml:lang="de">hat Anzahl</rdfs:label>
+		<rdfs:comment xml:lang="en">A measurable is countable.</rdfs:comment>
+		<rdfs:comment xml:lang="de">Etwas Messbares ist zählbar.</rdfs:comment>
+		<rdfs:subPropertyOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/P90_has_value"/>
+		<rdfs:domain rdf:resource="https://gams.uni-graz.at/o:depcha.bookkeeping#Measurable"/>
+		<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+		<rdfs:seeAlso rdf:resource="https://www.wikidata.org/wiki/Q309314"/>
+		<skos:example rdf:parseType="Literal">
+			<measure ana="#bk_money" quantity="20" unit="dollar">20 $</measure>
+		</skos:example>
+		<skos:example>&lt;bk:Money&gt; bk:unit &quot;dollars&quot;; bk:quantity &quot;30&quot;; bk:text &quot;thirty dollars&quot;.</skos:example>
+	</rdf:Property>
+	<rdf:Property rdf:about="https://gams.uni-graz.at/o:depcha.bookkeeping#unit">
+		<rdfs:label xml:lang="en">unit</rdfs:label>
+		<rdfs:label xml:lang="de">hat Einheit</rdfs:label>
+		<rdfs:comment xml:lang="en">A Measurable has a unit.</rdfs:comment>
+		<rdfs:comment xml:lang="de">Etwas Messbares hat eine Einheit.</rdfs:comment>
+		<rdfs:subPropertyOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/P91_has_unit"/>
+		<rdfs:domain rdf:resource="https://gams.uni-graz.at/o:depcha.bookkeeping#Measurable"/>
+		<rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+		<rdfs:seeAlso rdf:resource="https://www.wikidata.org/wiki/Q47574"/>
+		<skos:example rdf:parseType="Literal">
+			<measure ana="#bk_service" quantity="5" unit="hours">5 h work</measure>
+		</skos:example>
+		<skos:example rdf:parseType="Literal">
+			<measure ana="#bk_money" quantity="20" unit="dollar">20 $</measure>
+		</skos:example>
+		<skos:example> &lt;bk:Money&gt; bk:unit &quot;dollar&quot;. </skos:example>
+		<skos:example> &lt;bk:Commodity&gt; bk:unit &lt;https://www.wikidata.org/wiki/Q11570&gt;. </skos:example>
+	</rdf:Property>
+	<rdf:Property rdf:about="https://gams.uni-graz.at/o:depcha.bookkeeping#when">
+		<rdfs:label xml:lang="en">when</rdfs:label>
+		<rdfs:label xml:lang="de">hat Zeitraum</rdfs:label>
+		<rdfs:comment xml:lang="en">A bk:Transaction can be related to a date, which can is the date of transaction</rdfs:comment>
+		<rdfs:comment xml:lang="de">Stellt die Verbindung zu einer Zeitangabe her.</rdfs:comment>
+		<rdfs:domain rdf:resource="https://gams.uni-graz.at/o:depcha.bookkeeping#Transaction"/>
+		<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+		<skos:example rdf:parseType="Literal">
+			<date ana="#bk_when" when="1750-07-10">10. July 1750</date>
+		</skos:example>
+		<skos:example> &lt;bk:Transaction&gt; bk:when &quot;1750-06-10&quot;. </skos:example>
+	</rdf:Property>
+	<rdf:Property rdf:about="https://gams.uni-graz.at/o:depcha.bookkeeping#where">
+		<rdfs:label xml:lang="en">where</rdfs:label>
+		<rdfs:label xml:lang="de">hat Ort</rdfs:label>
+		<rdfs:comment xml:lang="en">A Transaction can be related to a place.</rdfs:comment>
+		<rdfs:comment xml:lang="de">Eine Transaction steht mit einem Ort in Verbindung</rdfs:comment>
+		<rdfs:domain rdf:resource="https://gams.uni-graz.at/o:depcha.bookkeeping#Transaction"/>
+		<rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+		<skos:example rdf:parseType="Literal">
+			<placeName ana="#bk_where">Graz</placeName>
+		</skos:example>
+		<skos:example> &lt;bk:Transaction&gt; bk:where &quot;Graz&quot;. </skos:example>
+		<skos:example> &lt;bk:Transaction&gt; bk:where &lt;http://www.geonames.org/2778067&gt;. </skos:example>
+	</rdf:Property>
+	<rdf:Property rdf:about="https://gams.uni-graz.at/o:depcha.bookkeeping#name">
+		<rdfs:label xml:lang="en">name</rdfs:label>
+		<rdfs:label xml:lang="de">genannt</rdfs:label>
+		<rdfs:comment xml:lang="en">Gives a Party or an Account a name.</rdfs:comment>
+		<rdfs:comment xml:lang="de">Name eines Akteurs oder eines Kontos.</rdfs:comment>
+		<rdfs:domain rdf:resource="https://gams.uni-graz.at/o:depcha.bookkeeping#Between"/>
+		<rdfs:seeAlso rdf:resource="https://www.wikidata.org/wiki/Q82799"/>
+		<rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+		<skos:example rdf:parseType="Literal">
+			<name ana="#bk_to" ref="LMWcash" type="account">cash</name>
+		</skos:example>
+		<skos:example rdf:parseType="Literal">
+			<persName ana="#bk_from" ref="pers.1">Darius Drake</persName>
+		</skos:example>
+		<skos:example> &lt;bk:Account&gt; bk:name &quot;Cash Account&quot;. </skos:example>
+		<skos:example> &lt;bk:Party&gt; bk:name &quot;Darius Drake&quot;. </skos:example>
+	</rdf:Property>
+	<rdf:Property rdf:about="https://gams.uni-graz.at/o:depcha.bookkeeping#transactionStatus">
+		<rdfs:label xml:lang="en">status</rdfs:label>
+		<rdfs:label xml:lang="de">hat Status</rdfs:label>
+		<rdfs:comment xml:lang="en">Specifies the status of a transaction.</rdfs:comment>
+		<rdfs:comment xml:lang="de">Spezifiziert den Status einer Transaktion weiter.</rdfs:comment>
+		<rdfs:domain rdf:resource="https://gams.uni-graz.at/o:depcha.bookkeeping#Transaction"/>
+		<rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+		<skos:example rdf:parseType="Literal">
+			<span ana="#bk_status">in full</span>
+		</skos:example>
+		<skos:example rdf:parseType="Literal">
+			<span ana="#bk_status">pp.</span>
+		</skos:example>
+		<skos:example rdf:parseType="Literal">
+			<span ana="#bk_status">settled</span>
+		</skos:example>
+		<skos:example> &lt;bk:Transaction&gt; bk:status &quot;pp.&quot;.</skos:example>
+		<skos:example> &lt;bk:Transaction&gt; bk:status &quot;in full&quot;.</skos:example>
+		<skos:example> &lt;bk:Transaction&gt; bk:status &quot;settled&quot;.</skos:example>
+	</rdf:Property>
+</rdf:RDF>
